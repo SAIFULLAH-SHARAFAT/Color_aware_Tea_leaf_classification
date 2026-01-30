@@ -5,7 +5,7 @@ import { AGREEMENT_THRESHOLDS } from '@/constants/api';
 
 interface XAIOverlayProps {
     explanations: PredictionResponse['explanations'];
-    method: 'gradcam' | 'gradcampp' | 'layercam' | 'shap' | 'consensus';
+    method: 'gradcam' | 'gradcampp' | 'layercam' | 'shap' | 'hirescam' | 'consensus';
 }
 
 export function XAIOverlay({ explanations, method }: XAIOverlayProps) {

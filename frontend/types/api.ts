@@ -14,6 +14,7 @@ export type PredictionResponse = {
         gradcampp: string;
         layercam: string;
         shap: string;
+        hirescam: string;
         consensus: string;
     };
     final_status: 'accepted' | 'retake_required';

@@ -35,6 +35,18 @@ export default function CaptureScreen() {
         return true;
     }, []);
 
+    const requestCameraPermission = useCallback(async () => {
+        const { status } = await ImagePicker.requestCameraPermissionsAsync();
+        if (status !== ImagePicker.PermissionStatus.GRANTED) {
+            Alert.alert(
+                'Permission Required',
+                'Please allow camera access to take a photo.'
+            );
+            return false;
+        }
+        return true;
+    }, []);
+
     const pickImageFromLibrary = useCallback(async () => {
         const allowed = await requestPermission();
         if (!allowed) return;
@@ -56,6 +68,27 @@ export default function CaptureScreen() {
             Alert.alert('Error', message);
         }
     }, [requestPermission]);
+
+    const takePhoto = useCallback(async () => {
+        const allowed = await requestCameraPermission();
+        if (!allowed) return;
+
+        try {
+            const result = await ImagePicker.launchCameraAsync({
+                allowsEditing: true,
+                aspect: [1, 1],
+                quality: 1,
+            });
+
+            if (!result.canceled) {
+                setSelectedImage(result.assets[0].uri);
+            }
+        } catch (err) {
+            const message = err instanceof Error ? err.message : 'Failed to take photo';
+            console.error('Camera error:', err);
+            Alert.alert('Error', message);
+        }
+    }, [requestCameraPermission]);
 
     const handleAnalyze = useCallback(async () => {
         if (!selectedImage) {
@@ -103,7 +136,7 @@ export default function CaptureScreen() {
             <ScrollView contentContainerStyle={styles.container}>
                 <View style={styles.header}>
                     <Text style={styles.title}>Leaf Disease Checker</Text>
-                    <Text style={styles.subtitle}>Upload a clear photo of the leaf</Text>
+                    <Text style={styles.subtitle}>Take or upload a clear photo of the leaf</Text>
                 </View>
 
                 <View style={styles.imageCard}>
@@ -117,14 +150,25 @@ export default function CaptureScreen() {
                         </View>
                     )}
 
-                    <TouchableOpacity
-                        style={styles.pickButton}
-                        onPress={pickImageFromLibrary}
-                        disabled={loading}
-                    >
-                        <MaterialIcons name="photo-library" size={20} color="#FFFFFF" />
-                        <Text style={styles.pickButtonText}>Choose from Library</Text>
-                    </TouchableOpacity>
+                    <View style={styles.buttonRow}>
+                        <TouchableOpacity
+                            style={styles.pickButton}
+                            onPress={takePhoto}
+                            disabled={loading}
+                        >
+                            <MaterialIcons name="camera-alt" size={20} color="#FFFFFF" />
+                            <Text style={styles.pickButtonText}>Take Photo</Text>
+                        </TouchableOpacity>
+
+                        <TouchableOpacity
+                            style={styles.pickButton}
+                            onPress={pickImageFromLibrary}
+                            disabled={loading}
+                        >
+                            <MaterialIcons name="photo-library" size={20} color="#FFFFFF" />
+                            <Text style={styles.pickButtonText}>Choose Library</Text>
+                        </TouchableOpacity>
+                    </View>
                 </View>
 
                 {selectedImage && (
@@ -220,6 +264,7 @@ const styles = StyleSheet.create({
         fontSize: 14,
     },
     pickButton: {
+        flex: 1,
         flexDirection: 'row',
         backgroundColor: '#3B82F6',
         borderRadius: 10,

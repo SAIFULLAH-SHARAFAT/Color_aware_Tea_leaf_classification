@@ -42,6 +42,7 @@ export function usePredict(): UsePredictResult {
                         gradcampp: imageUri,
                         layercam: imageUri,
                         shap: imageUri,
+                        hirescam: imageUri,
                     },
                     final_status: 'accepted',
                 };

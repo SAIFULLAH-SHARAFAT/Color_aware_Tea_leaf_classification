@@ -12,4 +12,4 @@ export const IMAGE_CONSTRAINTS = {
     SUPPORTED_FORMATS: ['image/jpeg', 'image/png'],
 };
 
-export const XAI_METHODS = ['gradcam', 'gradcampp', 'layercam', 'shap', 'consensus'] as const;
+export const XAI_METHODS = ['gradcam', 'gradcampp', 'layercam', 'shap', 'hirescam', 'consensus'] as const;

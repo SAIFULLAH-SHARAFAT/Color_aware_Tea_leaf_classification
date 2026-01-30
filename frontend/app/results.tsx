@@ -152,7 +152,7 @@ export default function ResultsScreen() {
                                     Consensus Result (Merged Logic)
                                 </Text>
                                 <Text style={{ fontSize: 12, color: '#64748B', marginBottom: 8 }}>
-                                    Combines all 4 methods to show the most accurate disease location.
+                                    Combines all 5 methods to show the most accurate disease location.
                                 </Text>
                                 <XAIOverlay explanations={prediction.explanations} method="consensus" />
                             </View>
@@ -163,6 +163,7 @@ export default function ResultsScreen() {
                             <XAIOverlay explanations={prediction.explanations} method="gradcampp" />
                             <XAIOverlay explanations={prediction.explanations} method="layercam" />
                             <XAIOverlay explanations={prediction.explanations} method="shap" />
+                            <XAIOverlay explanations={prediction.explanations} method="hirescam" />
                         </View>
                     </>
                 ) : (
