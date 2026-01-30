@@ -6,7 +6,7 @@ import itertools
 from scipy import ndimage
 
 # Import ALL methods
-from pytorch_grad_cam import GradCAM, GradCAM++, LayerCAM, AblationCAM
+from pytorch_grad_cam import GradCAM, GradCAMPlusPlus, LayerCAM, AblationCAM
 from pytorch_grad_cam.utils.image import show_cam_on_image
 from pytorch_grad_cam.ablation_layer import AblationLayerVit
 
@@ -95,7 +95,7 @@ def generate_explanations(model, input_tensor, target_layer, original_img):
 
     cams = {
         "gradcam": GradCAM(model=model, target_layers=[target_layer], reshape_transform=swin_reshape_transform),
-        "gradcampp": GradCAM++(model=model, target_layers=[target_layer], reshape_transform=swin_reshape_transform),
+        "gradcampp": GradCAMPlusPlus(model=model, target_layers=[target_layer], reshape_transform=swin_reshape_transform),
         "layercam": LayerCAM(model=model, target_layers=[target_layer], reshape_transform=swin_reshape_transform),
         "shap": AblationCAM(
             model=model, 
