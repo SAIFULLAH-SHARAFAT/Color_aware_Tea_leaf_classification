@@ -1,0 +1,30 @@
+status: 
+source_inspirations:
+  decode_branch: 
+  grouped_value_attention: 
+future_campaign:
+  seeds: [42, 1337, 2026]
+  designs:
+    F0:
+      label: shared-weight RGB/HSV dual trajectory with independent self-attention
+      role: weight-sharing baseline
+    F1:
+      label: asymmetric shared-KV color branch with a/b/c coupling
+      role: primary proposed future method
+      estimated_extra_params_excluding_optional_readout: 60384
+    F2:
+      label: minimal asymmetric shared-KV branch with a/c coupling
+      role: ultra-light ablation
+      estimated_extra_params_excluding_optional_readout: 24288
+    F3:
+      label: confidence-gated mixture readout
+      variants: [decode_branch_collision, normalized_7class_collision]
+    F4:
+      label: gated-copy compute-matched control
+      role: strict attention-compute control
+requirements_before_training:
+  - pin timm version after running 05_inspect_timm_swin_api.py
+  - implement and unit-test a block adapter that preserves Swin window/shift semantics
+  - verify primary forward invariance for fixed weights
+  - verify added parameter count and FLOPs
+  - freeze experiment matrix before reading test results

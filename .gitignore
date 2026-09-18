@@ -1,0 +1,29 @@
+# Dataset images are not versioned here. See data/README.md.
+data/Tea_leaf_dataset/
+data/tea_leaf_clean/
+data/raw/
+
+# Run artifacts.
+results/ckpt/
+results/runs/*/model/
+*.pth
+*.pt
+*.ckpt
+*.npy.gz
+
+# Caches
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+.DS_Store
+*.egg-info/
+.venv/
+venv/
+
+# LaTeX build
+*.aux
+*.log
+*.out
+*.bbl
+*.blg
+*.synctex.gz
